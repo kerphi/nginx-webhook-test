@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+
+  ngnix-webhook-test:
+    container_name: ngnix-webhook-test
+    image: ngnix-webhook-test:latest
+    build:
+      context: .
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - ./webhook.sh:/usr/share/nginx/html/webhook.sh
+    tty: true         # to have nice debug(...) outputs
+    stdin_open: true  # to be able to use CTRL+C to stop the debug
+    ports:
+      - 8081:80
+    restart: unless-stopped
